@@ -1,0 +1,145 @@
+/* 전역 공통 스타일 — 컴포넌트 전용 CSS 금지, 모든 스타일 여기서 공통 클래스로 */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --tool: 64px;          /* 큰 터치 타깃(3~6세) */
+  --swatch: 44px;
+  --gap: 10px;
+  --radius: 18px;
+  --bg: #fef6ff;
+  --panel: #ffffff;
+  --accent: #ff9800;
+  --accent-bg: #ffd54f;
+  --btn-bg: #f3eefb;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --font: system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+}
+
+html, body, #app { width: 100%; height: 100%; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#app { display: flex; flex-direction: row; }
+
+/* 좌우 세로 패널(팔레트=왼쪽 / 툴바=오른쪽) 공통 */
+.palette, .toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  align-items: center;
+  padding: 10px 8px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  flex: 0 0 auto; /* 캔버스에 밀려 찌그러지지 않게 — 버튼 잘림 방지 */
+  overflow-y: auto;
+  z-index: 5;
+}
+/* 툴바(오른쪽): 버튼 많아 다열 wrap */
+.toolbar { flex-wrap: wrap; justify-content: center; align-content: flex-start; padding-right: max(8px, env(safe-area-inset-right)); }
+/* 팔레트(왼쪽): 색상 그리드 + 도구 묶음을 위에서부터 쌓음 */
+.palette { justify-content: flex-start; padding-left: max(8px, env(safe-area-inset-left)); }
+/* 색상은 2열 그리드로 압축 → 세로 공간 절약(스폰지·되돌리기 자리 확보) */
+.swatch-grid { display: grid; grid-template-columns: repeat(3, var(--swatch)); gap: var(--gap); }
+/* 스폰지·되돌리기는 색상 바로 아래 한 묶음 */
+.left-tools { display: flex; gap: var(--gap); margin-top: 6px; }
+
+/* 캔버스 무대 */
+.stage { position: relative; flex: 1 1 auto; min-width: 0; min-height: 0; background: #fff; touch-action: none; }
+.layer { position: absolute; inset: 0; width: 100%; height: 100%; }
+.outline { pointer-events: none; display: flex; align-items: center; justify-content: center; }
+.outline svg { width: 100%; height: 100%; }
+
+/* 데칼코마니 중심선 (흐리게) — 켜질 때만 표시 */
+.axis {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 0;
+  border-left: 4px dashed rgba(120, 120, 130, 0.45);
+  transform: translateX(-2px);
+  filter: blur(1.5px);
+  pointer-events: none;
+  display: none;
+}
+.axis.on { display: block; }
+
+/* 공통 버튼 */
+.btn-tool {
+  width: var(--tool); height: var(--tool);
+  border: none; border-radius: var(--radius);
+  background: var(--btn-bg);
+  font-size: 30px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; box-shadow: var(--shadow);
+  transition: transform 0.08s ease;
+}
+.btn-tool:active { transform: scale(0.92); }
+.btn-tool.active { background: var(--accent-bg); outline: 3px solid var(--accent); }
+
+/* 색 동그라미 */
+.swatch {
+  width: var(--swatch); height: var(--swatch);
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.08s ease;
+}
+.swatch:active { transform: scale(0.9); }
+.swatch.active { outline: 4px solid #333; transform: scale(1.14); }
+
+/* 브러시 굵기 표시 점 (공통) */
+.dot { display: inline-block; background: #444; border-radius: 50%; }
+.dot.sm { width: 10px; height: 10px; }
+.dot.md { width: 18px; height: 18px; }
+.dot.lg { width: 28px; height: 28px; }
+
+/* 도안 피커 드로어 */
+.picker {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: none;
+  align-items: center; justify-content: center;
+  z-index: 20; padding: 16px;
+}
+.picker.open { display: flex; }
+.picker-grid {
+  background: var(--panel);
+  border-radius: 24px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  max-width: 920px; width: 100%;
+  max-height: 86vh; overflow-y: auto;
+}
+.thumb {
+  border: 3px solid #eee; border-radius: 18px;
+  background: #fff; padding: 6px; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.thumb:active { transform: scale(0.95); }
+.thumb svg { width: 100%; height: 90px; }
+.thumb span { font-size: 13px; color: #555; }
+.picker-cat {
+  grid-column: 1 / -1;
+  font-size: 16px; font-weight: 700; color: #7b4ea6;
+  padding: 6px 4px 2px; margin-top: 4px;
+  border-bottom: 2px solid #f0e6fa;
+}
+.btn-wide {
+  grid-column: 1 / -1;
+  width: 100%;
+  border: none; border-radius: var(--radius);
+  background: var(--btn-bg);
+  padding: 14px; font-size: 18px;
+  cursor: pointer; box-shadow: var(--shadow);
+}
+.btn-wide:active { transform: scale(0.97); }

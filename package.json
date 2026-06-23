@@ -1,0 +1,17 @@
+{
+  "name": "kids-coloring",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "3~6세 유아 터치 색칠놀이 (Vite + TS + Canvas)",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11",
+    "vite-plugin-pwa": "^1.3.0"
+  }
+}

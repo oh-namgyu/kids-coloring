@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#fef6ff" />
+    <title>색칠 놀이 🎨</title>
+  </head>
+  <body>
+    <div id="app">
+      <div id="palette" class="palette" aria-label="색깔 고르기"></div>
+      <main id="stage" class="stage">
+        <canvas id="bg" class="layer"></canvas>
+        <canvas id="paint" class="layer"></canvas>
+        <div id="outline" class="layer outline" aria-hidden="true"></div>
+        <div id="axis" class="axis" aria-hidden="true"></div>
+      </main>
+      <div id="toolbar" class="toolbar" aria-label="도구"></div>
+      <div id="picker" class="picker" aria-label="그림 고르기"></div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
