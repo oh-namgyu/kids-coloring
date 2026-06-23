@@ -1,5 +1,7 @@
 # Kids Coloring 🎨
 
+> 🌐 **[Live demo](https://kids-coloring-demo.vercel.app)** — best on a tablet; installable & works offline.
+
 A touch-based coloring web app for young children (ages ~3–6). Pick an outline, fill it in with playful pens, and save your artwork. No backend, no accounts, works offline — it's a fully static **Progressive Web App**.
 
 > The in-app UI is in **Korean** (the target audience is Korean-speaking children). Internationalization is a welcome contribution.
