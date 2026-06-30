@@ -1,5 +1,8 @@
 # Kids Coloring 🎨
 
+[![CI](https://github.com/oh-namgyu/kids-coloring/actions/workflows/ci.yml/badge.svg)](https://github.com/oh-namgyu/kids-coloring/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/github/license/oh-namgyu/kids-coloring)](LICENSE)
+
 > 🌐 **[Live demo](https://kids-coloring-demo.vercel.app)** — best on a tablet; installable & works offline.
 
 A touch-based coloring web app for young children (ages ~3–6). Pick an outline, fill it in with playful pens, and save your artwork. No backend, no accounts, works offline — it's a fully static **Progressive Web App**.
