@@ -80,11 +80,26 @@ const TPL_EN: Record<string, string> = {
   balloon: 'Balloon'
 }
 
-let lang: Lang = ((): Lang => {
-  const saved = localStorage.getItem('lang')
-  if (saved === 'en' || saved === 'ko') return saved
-  return navigator.language.toLowerCase().startsWith('ko') ? 'ko' : 'en'
-})()
+// localStorage 접근은 일부 사생활 모드/임베드 웹뷰에서 throw → 안전 래퍼로 감싼다
+// (가드 없으면 앱 로드 시 또는 언어 토글 시 크래시).
+function readStoredLang(): Lang | null {
+  try {
+    const v = localStorage.getItem('lang')
+    return v === 'en' || v === 'ko' ? v : null
+  } catch {
+    return null
+  }
+}
+
+function storeLang(value: Lang): void {
+  try {
+    localStorage.setItem('lang', value)
+  } catch {
+    /* 저장 불가(사생활 모드 등) — 메모리 상태만 유지 */
+  }
+}
+
+let lang: Lang = readStoredLang() ?? (navigator.language.toLowerCase().startsWith('ko') ? 'ko' : 'en')
 
 const listeners = new Set<() => void>()
 
@@ -95,7 +110,7 @@ export function getLang(): Lang {
 export function setLang(next: Lang): void {
   if (next === lang) return
   lang = next
-  localStorage.setItem('lang', next)
+  storeLang(next)
   document.documentElement.lang = next
   listeners.forEach((fn) => fn())
 }

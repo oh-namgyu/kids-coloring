@@ -2,6 +2,10 @@
 
 All notable changes are documented here. Format: [Keep a Changelog](https://keepachangelog.com/), versioning: [SemVer](https://semver.org/).
 
+## [v0.2.1] - 2026-06-30
+### Fixed
+- Guard `localStorage` access (language preference) with try/catch so the app no longer crashes on load — or when toggling language — in private-mode or storage-disabled browsers/webviews. Falls back to in-memory state.
+
 ## [v0.2.0] - 2026-06-30
 ### Added
 - **Bilingual UI (English / Korean)** — auto-detected from the browser language (English by default, Korean for Korean browsers), with a one-tap `한`/`EN` toggle. Tool tooltips, pen names, the 6 categories, and all 84 template names are translated; the language choice is remembered (`localStorage`). New `src/i18n.ts` module.
