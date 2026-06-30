@@ -82,6 +82,8 @@ body {
 }
 .btn-tool:active { transform: scale(0.92); }
 .btn-tool.active { background: var(--accent-bg); outline: 3px solid var(--accent); }
+/* 언어 토글은 이모지가 아니라 글자(EN/한) — 작고 굵게 */
+.lang-btn { font-size: 17px; font-weight: 800; color: var(--accent); }
 
 /* 색 동그라미 */
 .swatch {

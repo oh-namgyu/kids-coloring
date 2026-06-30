@@ -2,6 +2,7 @@ import { AppState } from '../state'
 import { BRUSH_SIZES, PENS } from '../config'
 import { SparkleAudio } from '../audio'
 import { el } from '../util'
+import { t, bindTitle, bindText, getLang, toggleLang } from '../i18n'
 
 export interface ToolbarActions {
   openPicker: () => void
@@ -13,8 +14,10 @@ export interface ToolbarActions {
 
 const SIZE_CLASS = ['sm', 'md', 'lg']
 
-function iconBtn(icon: string, title: string, onClick: () => void): HTMLButtonElement {
-  const b = el('button', 'btn-tool', { type: 'button', textContent: icon, title })
+// title 은 i18n 키. bindTitle 로 언어 변경 시 자동 갱신.
+function iconBtn(icon: string, titleKey: string, onClick: () => void): HTMLButtonElement {
+  const b = el('button', 'btn-tool', { type: 'button', textContent: icon })
+  bindTitle(b, titleKey)
   b.addEventListener('click', onClick)
   return b
 }
@@ -24,8 +27,8 @@ function iconBtn(icon: string, title: string, onClick: () => void): HTMLButtonEl
 export function buildToolbar(root: HTMLElement, leftRoot: HTMLElement, state: AppState, actions: ToolbarActions, audio: SparkleAudio): void {
   const penBtns = new Map<string, HTMLElement>()
   const sizeBtns: HTMLElement[] = []
-  const eraserBtn = iconBtn('🧽', '지우개', () => { state.eraser = !state.eraser; refresh() })
-  const symBtn = iconBtn('🦋', '데칼코마니(대칭)', () => {
+  const eraserBtn = iconBtn('🧽', 'eraser', () => { state.eraser = !state.eraser; refresh() })
+  const symBtn = iconBtn('🦋', 'mirror', () => {
     state.symmetry = !state.symmetry
     refresh()
     actions.onSymmetry?.(state.symmetry)
@@ -38,14 +41,15 @@ export function buildToolbar(root: HTMLElement, leftRoot: HTMLElement, state: Ap
     symBtn.classList.toggle('active', state.symmetry)
   }
 
-  root.appendChild(iconBtn('📋', '그림 고르기', actions.openPicker))
+  root.appendChild(iconBtn('📋', 'pick', actions.openPicker))
   for (const p of PENS) {
-    const b = iconBtn(p.icon, p.label, () => { state.pen = p.type; state.eraser = false; refresh() })
+    const b = iconBtn(p.icon, `pen_${p.type}`, () => { state.pen = p.type; state.eraser = false; refresh() })
     penBtns.set(p.type, b)
     root.appendChild(b)
   }
   BRUSH_SIZES.forEach((sz, i) => {
-    const b = el('button', 'btn-tool', { type: 'button', title: '굵기' })
+    const b = el('button', 'btn-tool', { type: 'button' })
+    bindTitle(b, 'size')
     b.appendChild(el('span', `dot ${SIZE_CLASS[i]}`))
     b.addEventListener('click', () => { state.size = sz; refresh() })
     sizeBtns.push(b)
@@ -54,15 +58,22 @@ export function buildToolbar(root: HTMLElement, leftRoot: HTMLElement, state: Ap
   root.appendChild(symBtn)
   // 지우개(스폰지)·되돌리기 → 왼쪽 패널, 색상 그리드 아래 한 묶음으로 항상 노출
   const leftTools = el('div', 'left-tools')
-  leftTools.append(eraserBtn, iconBtn('↩️', '되돌리기', actions.undo))
+  leftTools.append(eraserBtn, iconBtn('↩️', 'undo', actions.undo))
   leftRoot.appendChild(leftTools)
-  root.appendChild(iconBtn('🗑️', '전체 지우기', () => { if (confirm('그림을 모두 지울까요?')) actions.clearAll() }))
-  root.appendChild(iconBtn('💾', '저장', actions.save))
-  const muteBtn = iconBtn('🔊', '소리 켜기/끄기', () => {
+  root.appendChild(iconBtn('🗑️', 'clearAll', () => { if (confirm(t('clearConfirm'))) actions.clearAll() }))
+  root.appendChild(iconBtn('💾', 'save', actions.save))
+  const muteBtn = iconBtn('🔊', 'sound', () => {
     audio.muted = !audio.muted
     muteBtn.textContent = audio.muted ? '🔇' : '🔊'
   })
   root.appendChild(muteBtn)
+
+  // 언어 토글(EN ↔ 한) — 텍스트는 전환 대상 언어를 표시.
+  const langBtn = el('button', 'btn-tool lang-btn', { type: 'button' })
+  bindTitle(langBtn, 'language')
+  bindText(langBtn, () => (getLang() === 'ko' ? 'EN' : '한'))
+  langBtn.addEventListener('click', toggleLang)
+  root.appendChild(langBtn)
 
   refresh()
 }

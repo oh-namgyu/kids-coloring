@@ -11,6 +11,7 @@ import { buildPicker } from './ui/picker'
 import { buildPalette } from './ui/palette'
 import { buildToolbar } from './ui/toolbar'
 import { SparkleAudio } from './audio'
+import { initDocumentChrome } from './i18n'
 
 const $ = (id: string): HTMLElement => {
   const el = document.getElementById(id)
@@ -30,6 +31,9 @@ attachPainter(layers, state, {
   },
   onPaintAt: () => audio.sparkle()
 })
+
+// 문서 chrome(탭 제목·html lang·팔레트 aria) 다국어 초기화
+initDocumentChrome($('palette'))
 
 buildPalette($('palette'), (color) => {
   state.color = color

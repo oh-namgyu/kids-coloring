@@ -17,10 +17,11 @@ export const COLORS: string[] = [
 // 브러시 크기 3단계 (작은/중간/큰) — CSS px 기준 지름
 export const BRUSH_SIZES: number[] = [12, 26, 46]
 
-export const PENS: { type: PenType; icon: string; label: string }[] = [
-  { type: 'pastel', icon: '🖍️', label: '파스텔' },
-  { type: 'pearl', icon: '✨', label: '펄' },
-  { type: 'rainbow', icon: '🌈', label: '무지개' }
+// label 은 i18n(키 pen_<type>)에서 해석 — 여기엔 타입·아이콘만 둔다.
+export const PENS: { type: PenType; icon: string }[] = [
+  { type: 'pastel', icon: '🖍️' },
+  { type: 'pearl', icon: '✨' },
+  { type: 'rainbow', icon: '🌈' }
 ]
 
 export const HISTORY_CAP = 12      // 되돌리기 스냅샷 최대 보관

@@ -9,7 +9,7 @@
 
 A touch-based coloring web app for young children (ages ~3–6). Pick an outline, fill it in with playful pens, and save your artwork. No backend, no accounts, works offline — it's a fully static **Progressive Web App**.
 
-> The in-app UI is in **Korean** (the target audience is Korean-speaking children). Internationalization is a welcome contribution.
+> The in-app UI is **bilingual** — it auto-detects your browser language (**English** by default, **Korean** for Korean browsers) and has a one-tap `한`/`EN` toggle. More languages are a welcome contribution.
 
 ## ✨ Features
 
@@ -22,7 +22,10 @@ A touch-based coloring web app for young children (ages ~3–6). Pick an outline
 - **Sparkle sound** — synthesized chime via the Web Audio API (no audio files), with a mute toggle.
 - **Tools** — 3 brush sizes, eraser, undo, clear, and **save as PNG** (outline + painting flattened).
 - **Child-friendly UI** — icon-first, large touch targets, scrolling/zoom blocked while drawing.
+- **Bilingual UI** — English / Korean, auto-detected from the browser with a one-tap `한`/`EN` toggle.
 - **PWA** — installable to the home screen; once visited online, it works fully **offline**.
+
+![Template picker — 84 outlines across 6 categories](docs/gallery.png)
 
 ## 🚀 Getting started
 

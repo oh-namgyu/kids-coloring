@@ -1,5 +1,6 @@
 import { CATEGORIES } from '../templates'
 import { el } from '../util'
+import { t, tCat, tTpl, bindText } from '../i18n'
 
 export interface Picker {
   open: () => void
@@ -13,20 +14,25 @@ export function buildPicker(root: HTMLElement, onSelect: (id: string) => void): 
   const grid = el('div', 'picker-grid')
 
   for (const cat of CATEGORIES) {
-    grid.appendChild(el('div', 'picker-cat', { textContent: cat.name }))
-    for (const t of cat.templates) {
+    const catEl = el('div', 'picker-cat')
+    bindText(catEl, () => tCat(cat.id, cat.name))
+    grid.appendChild(catEl)
+    for (const tpl of cat.templates) {
       const item = el('button', 'thumb', { type: 'button' })
-      item.innerHTML = t.svg
-      item.appendChild(el('span', undefined, { textContent: t.name }))
+      item.innerHTML = tpl.svg
+      const name = el('span')
+      bindText(name, () => tTpl(tpl.id, tpl.name))
+      item.appendChild(name)
       item.addEventListener('click', () => {
-        onSelect(t.id)
+        onSelect(tpl.id)
         close()
       })
       grid.appendChild(item)
     }
   }
 
-  const closeBtn = el('button', 'btn-wide', { type: 'button', textContent: '✖ 닫기' })
+  const closeBtn = el('button', 'btn-wide', { type: 'button' })
+  bindText(closeBtn, () => `✖ ${t('close')}`)
   closeBtn.addEventListener('click', close)
   grid.appendChild(closeBtn)
 
