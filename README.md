@@ -3,6 +3,8 @@
 [![CI](https://github.com/oh-namgyu/kids-coloring/actions/workflows/ci.yml/badge.svg)](https://github.com/oh-namgyu/kids-coloring/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/github/license/oh-namgyu/kids-coloring)](LICENSE)
 
+> **한글 요약** — 유아용 터치 색칠 PWA입니다 — SVG 도안 84종, 파스텔/펄/무지개 펜, 데칼코마니, 오프라인 설치 지원. 백엔드 없는 정적 앱입니다.
+
 > 🌐 **[Live demo](https://kids-coloring-demo.vercel.app)** — best on a tablet; installable & works offline.
 
 ![Kids Coloring — coloring a butterfly outline with pastel pens and the rainbow ribbon](docs/screenshot.png)
