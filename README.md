@@ -1,7 +1,7 @@
 # Kids Coloring 🎨
 
 [![CI](https://github.com/oh-namgyu/kids-coloring/actions/workflows/ci.yml/badge.svg)](https://github.com/oh-namgyu/kids-coloring/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/github/license/oh-namgyu/kids-coloring)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 > **한글 요약** — 유아용 터치 색칠 PWA입니다 — SVG 도안 84종, 파스텔/펄/무지개 펜, 데칼코마니, 오프라인 설치 지원. 백엔드 없는 정적 앱입니다.
 
@@ -73,4 +73,4 @@ The `svg(...)` helper wraps your shapes in a `100×100` viewBox with a bold roun
 
 ## 📄 License
 
-[MIT](LICENSE)
+MIT — see [LICENSE](LICENSE). Security policy: [SECURITY.md](SECURITY.md).
