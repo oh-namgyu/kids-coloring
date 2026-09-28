@@ -2,7 +2,12 @@
 
 All notable changes are documented here. Format: [Keep a Changelog](https://keepachangelog.com/), versioning: [SemVer](https://semver.org/).
 
-## [v0.2.1] - 2026-06-30
+## [Unreleased]
+### Added
+- Unit tests for the canvas core and pure logic (5 → 46 tests): undo history (LIFO, `HISTORY_CAP` eviction, stale-after-resize guard), brush interpolation and per-pen stamping, pointer → painter wiring incl. mirror mode, mirror math, PNG export (flatten, outline contain, timestamped filename), layer resize/DPR cap, i18n detection/persistence/fallbacks and full template translation coverage, color/config/state helpers.
+- Zero-dependency TypeScript test loader (`test/support/`): tests import `src/*.ts` directly via a Node module hook using Vite's bundled Oxc transformer. Works on the CI Node 20/22 matrix without source changes.
+
+ - 2026-06-30
 ### Fixed
 - Guard `localStorage` access (language preference) with try/catch so the app no longer crashes on load — or when toggling language — in private-mode or storage-disabled browsers/webviews. Falls back to in-memory state.
 

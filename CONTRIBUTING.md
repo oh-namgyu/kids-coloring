@@ -8,10 +8,12 @@ Thanks for your interest! This is a small, dependency-light static PWA. Contribu
 npm install
 npm run dev        # vite dev server
 npm run build      # tsc --noEmit && vite build
-npm test           # node --test
+npm test           # node --test (src/*.ts imported via test/support/register-ts.mjs)
 ```
 
 CI runs `npm ci && npm run build && npm test` on Node 20 and 22.
+
+Tests use only `node:test` + `node:assert` — no test framework. A small module hook (`test/support/ts-hooks.mjs`) lets test files import `src/*.ts` directly by transpiling with the Oxc transformer that ships with Vite, and canvas/DOM APIs are replaced by recording fakes (`test/support/fake-canvas.mjs`).
 
 ## Guidelines
 
