@@ -6,6 +6,7 @@ export type Lang = 'en' | 'ko'
 const MESSAGES: Record<Lang, Record<string, string>> = {
   ko: {
     title: '색칠 놀이 🎨',
+    saveFileName: '색칠놀이',
     pickColor: '색깔 고르기',
     pick: '그림 고르기',
     eraser: '지우개',
@@ -24,6 +25,7 @@ const MESSAGES: Record<Lang, Record<string, string>> = {
   },
   en: {
     title: 'Coloring 🎨',
+    saveFileName: 'coloring',
     pickColor: 'Pick a color',
     pick: 'Pick a picture',
     eraser: 'Eraser',

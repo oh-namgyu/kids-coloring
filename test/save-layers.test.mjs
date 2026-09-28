@@ -2,6 +2,7 @@
 import { test, beforeEach } from 'node:test'
 import assert from 'node:assert/strict'
 import { saveImage } from '../src/canvas/save.ts'
+import { getLang, setLang } from '../src/i18n.ts'
 import { resize, clearPaint } from '../src/canvas/layers.ts'
 import { DPR_CAP } from '../src/config.ts'
 import { fakeCtx, ops } from './support/fake-canvas.mjs'
@@ -34,6 +35,7 @@ beforeEach(() => {
   blob = true
   imageFails = false
   install('document', {
+    documentElement: {},
     createElement: (tag) => {
       const node = tag === 'canvas' ? fakeCanvas() : { tag, click() { this.clicked = true } }
       created.push(node)
@@ -65,7 +67,7 @@ test('save flattens white background + paint and downloads a timestamped PNG', (
   const seq = out.ctx.calls.map((c) => (c.op === 'set' ? `${c.key}=${c.value}` : c.op))
   assert.deepEqual(seq, ['fillStyle=#ffffff', 'fillRect', 'drawImage'])
   assert.deepEqual(ops(out.ctx, 'drawImage')[0].args.slice(1), [0, 0])
-  assert.equal(anchor().download, '색칠놀이-20260102-030405.png')
+  assert.equal(anchor().download, `${getLang() === 'ko' ? '색칠놀이' : 'coloring'}-20260102-030405.png`)
   assert.equal(anchor().href, 'blob:fake')
   assert.ok(anchor().clicked)
 })
@@ -137,4 +139,16 @@ test('clearPaint clears the whole backing store under identity transform', () =>
   clearPaint(layers)
   assert.deepEqual(ops(layers.paintCtx, 'setTransform')[0].args, [1, 0, 0, 1, 0, 0])
   assert.deepEqual(ops(layers.paintCtx, 'clearRect')[0].args, [0, 0, 640, 480])
+})
+
+test('the saved file name follows the UI language', () => {
+  const names = {}
+  for (const lang of ['en', 'ko']) {
+    setLang(lang)
+    created = []
+    saveImage(layersOf(10, 10), null)
+    names[lang] = anchor().download
+  }
+  assert.match(names.en, /^coloring-\d{8}-\d{6}\.png$/)
+  assert.match(names.ko, /^색칠놀이-\d{8}-\d{6}\.png$/)
 })

@@ -1,5 +1,6 @@
 import { Layers } from './layers'
 import { getTemplate } from '../templates'
+import { t } from '../i18n'
 
 // 배경(흰) + 페인트 + 도안 외곽선을 합성해 PNG 로 내려받기
 export function saveImage(layers: Layers, templateId: string | null): void {
@@ -34,7 +35,7 @@ function download(canvas: HTMLCanvasElement): void {
     if (!blob) return
     const a = document.createElement('a')
     a.href = URL.createObjectURL(blob)
-    a.download = `색칠놀이-${stamp()}.png`
+    a.download = `${t('saveFileName')}-${stamp()}.png`
     a.click()
     URL.revokeObjectURL(a.href)
   }, 'image/png')
