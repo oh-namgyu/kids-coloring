@@ -1,4 +1,5 @@
 // PNG export (flatten + outline contain + filename) and canvas layer sizing — via DOM fakes.
+import './support/browser-globals.mjs'
 import { test, beforeEach } from 'node:test'
 import assert from 'node:assert/strict'
 import { saveImage } from '../src/canvas/save.ts'
