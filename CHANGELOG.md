@@ -14,7 +14,7 @@ All notable changes are documented here. Format: [Keep a Changelog](https://keep
 - Zero-dependency TypeScript test loader (`test/support/`): tests import `src/*.ts` directly via a Node module hook using Vite's bundled Oxc transformer. Works on the CI Node 20/22/24 matrix without source changes.
 
 ### Security
-- Build-time dependency advisories resolved (none of these packages ship in the built app): esbuild (GHSA-67mh-4wv8-2f99) and the Vite dev-server `server.fs.deny` bypass via the Vite 8 upgrade; lockfile updates for `postcss` 8.5.29, `fast-uri` 3.1.8 (GHSA-qw65-cvwx-89v3, GHSA-58mr-gqgx-xq4g), `brace-expansion` 2.1.7 / 5.0.12 (GHSA-q2hr-2g5m-vwhr) and `source-map-js` 1.2.2 (GHSA-68fv-2mgg-jv7q).
+- Build-time dependency advisories resolved (none of these packages ship in the built app): esbuild (GHSA-67mh-4wv8-2f99) and the Vite dev-server `server.fs.deny` bypass via the Vite 8 upgrade; lockfile updates for `postcss` 8.5.29, `fast-uri` 3.1.8 (GHSA-qw65-cvwx-89v3, GHSA-58mr-gqgx-xq4g, GHSA-hrr3-gc8f-f4qj), `brace-expansion` 2.1.7 / 5.0.12 (GHSA-6j4f-fj2g-mc7p, GHSA-qhr7-859c-m2p7, GHSA-q2hr-2g5m-vwhr) and `source-map-js` 1.2.2 (GHSA-68fv-2mgg-jv7q).
 
 ## [v0.2.1] - 2026-06-30
 ### Fixed
