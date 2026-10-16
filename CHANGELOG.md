@@ -2,13 +2,19 @@
 
 All notable changes are documented here. Format: [Keep a Changelog](https://keepachangelog.com/), versioning: [SemVer](https://semver.org/).
 
-## [Unreleased]
+## [v0.3.0] - 2026-10-16
 ### Changed
 - The saved PNG is named after the UI language (`coloring-….png` in English, `색칠놀이-….png` in Korean) instead of always using the Korean name.
+- Build toolchain upgraded: Vite 5.4.21 → 8.3.4, TypeScript 5.9.3 → 7.0.2, vite-plugin-pwa 1.3.0 → 2.0.0. The generated web app manifest and service-worker precache list are unchanged.
+- CI now builds and tests on Node 20, 22 and 24. Dependabot opens weekly dependency updates and auto-merges patch/minor ones once CI passes.
+- README: Korean summary at the top, standardized header badges and License section.
 
 ### Added
-- Unit tests for the canvas core and pure logic (5 → 46 tests): undo history (LIFO, `HISTORY_CAP` eviction, stale-after-resize guard), brush interpolation and per-pen stamping, pointer → painter wiring incl. mirror mode, mirror math, PNG export (flatten, outline contain, timestamped filename), layer resize/DPR cap, i18n detection/persistence/fallbacks and full template translation coverage, color/config/state helpers.
-- Zero-dependency TypeScript test loader (`test/support/`): tests import `src/*.ts` directly via a Node module hook using Vite's bundled Oxc transformer. Works on the CI Node 20/22 matrix without source changes.
+- Unit tests for the canvas core and pure logic (5 → 47 tests): undo history (LIFO, `HISTORY_CAP` eviction, stale-after-resize guard), brush interpolation and per-pen stamping, pointer → painter wiring incl. mirror mode, mirror math, PNG export (flatten, outline contain, timestamped filename), layer resize/DPR cap, i18n detection/persistence/fallbacks and full template translation coverage, color/config/state helpers.
+- Zero-dependency TypeScript test loader (`test/support/`): tests import `src/*.ts` directly via a Node module hook using Vite's bundled Oxc transformer. Works on the CI Node 20/22/24 matrix without source changes.
+
+### Security
+- Build-time dependency advisories resolved (none of these packages ship in the built app): esbuild (GHSA-67mh-4wv8-2f99) and the Vite dev-server `server.fs.deny` bypass via the Vite 8 upgrade; lockfile updates for `postcss` 8.5.29, `fast-uri` 3.1.8 (GHSA-qw65-cvwx-89v3, GHSA-58mr-gqgx-xq4g), `brace-expansion` 2.1.7 / 5.0.12 (GHSA-q2hr-2g5m-vwhr) and `source-map-js` 1.2.2 (GHSA-68fv-2mgg-jv7q).
 
 ## [v0.2.1] - 2026-06-30
 ### Fixed
